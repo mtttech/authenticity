@@ -12,7 +12,7 @@ from authfit.models import Exercises, Workouts, engine
 def main() -> None:
     print("Displaying database data.")
 
-    with engine.connect() as conn:
+    with engine.connect() as conn: # pyright: ignore[reportGeneralTypeIssues]
         results = conn.execute(select(Workouts.workout_title))
         for row in results:
             print(row)

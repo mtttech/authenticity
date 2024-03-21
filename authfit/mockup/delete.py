@@ -12,6 +12,6 @@ from authfit.models import Exercises, Workouts, engine
 def main() -> None:
     print("Delete all the data in the databases.")
 
-    with engine.connect() as conn:
+    with engine.connect() as conn: # pyright: ignore[reportGeneralTypeIssues]
         conn.execute(delete(Exercises))
         conn.execute(delete(Workouts))

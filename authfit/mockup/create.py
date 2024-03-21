@@ -27,7 +27,7 @@ def prompt() -> None:
     while True:
         workout_title = input("Give your workout a title: ")
         # TODO: Add something to track the workout's duration, perhaps? >:(
-        with engine.connect() as conn:
+        with engine.connect() as conn: # pyright: ignore[reportGeneralTypeIssues]
             result = conn.execute(
                 insert(Workouts).values(
                     workout_title=workout_title,
@@ -41,7 +41,7 @@ def prompt() -> None:
             )
             for _ in range(1, num_of_exercises + 1):
                 exercise_name = input(
-                    "Enter the exercise (i.e Deadlift, Dumbbell Curl, etc): "
+                    "Enter the exercise (i.e Deadlift, Dumbbell Curl, Military Press, etc): "
                 )
                 exercise_weight = enter_number("Enter the amount of weight used: ")
                 number_of_sets = enter_number("How many sets: ")
