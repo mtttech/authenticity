@@ -12,6 +12,7 @@ from authfit.models import Exercises, Workouts, engine
 
 
 def enter_number(message: str) -> int:
+    """Prompts the user for a numerical value."""
     number = 0
     while number == 0:
         try:
@@ -23,48 +24,44 @@ def enter_number(message: str) -> int:
     return number
 
 
-def prompt() -> None:
-    while True:
-        workout_title = input("Give your workout a title: ")
-        # TODO: Add something to track the workout's duration, perhaps? >:(
-        with engine.connect() as conn: # pyright: ignore[reportGeneralTypeIssues]
-            result = conn.execute(
-                insert(Workouts).values(
-                    workout_title=workout_title,
-                    workout_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                )
-            )
-            conn.commit()
-
-            num_of_exercises = enter_number(
-                "How many exercises were performed during your workout?: "
-            )
-            for _ in range(1, num_of_exercises + 1):
-                exercise_name = input(
-                    "Enter the exercise (i.e Deadlift, Dumbbell Curl, Military Press, etc): "
-                )
-                exercise_weight = enter_number("Enter the amount of weight used: ")
-                number_of_sets = enter_number("How many sets: ")
-                for set_number in range(1, number_of_sets + 1):
-                    exercise_reps = enter_number(
-                        f"Enter the number of reps done in set {set_number}: "
-                    )
-                    conn.execute(
-                        insert(Exercises).values(
-                            exercise_name=exercise_name,
-                            workout_id=result.lastrowid,
-                            exercise_set=set_number,
-                            exercise_reps=exercise_reps,
-                            exercise_weight=exercise_weight,
-                        )
-                    )
-                    conn.commit()
-        break
-
-
 def main() -> None:
     try:
-        prompt()
+        while True:
+            workout_title = input("Give your workout session a title (i.e Monday Workout, My Meditation Session, etc): ")
+            # TODO: Add something to track the workout's duration, perhaps? >:(
+            with engine.connect() as conn: # pyright: ignore[reportGeneralTypeIssues]
+                result = conn.execute(
+                    insert(Workouts).values(
+                        workout_title=workout_title,
+                        workout_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    )
+                )
+                conn.commit()
+
+                num_of_exercises = enter_number(
+                    "How many exercises were performed during your workout?: "
+                )
+                for _ in range(1, num_of_exercises + 1):
+                    exercise_name = input(
+                        "Enter the exercise (i.e Deadlift, Dumbbell Curl, Military Press, etc): "
+                    )
+                    exercise_weight = enter_number("Enter the amount of weight used: ")
+                    number_of_sets = enter_number("How many sets: ")
+                    for set_number in range(1, number_of_sets + 1):
+                        exercise_reps = enter_number(
+                            f"Enter the number of reps done in set {set_number}: "
+                        )
+                        conn.execute(
+                            insert(Exercises).values(
+                                exercise_name=exercise_name,
+                                workout_id=result.lastrowid,
+                                exercise_set=set_number,
+                                exercise_reps=exercise_reps,
+                                exercise_weight=exercise_weight,
+                            )
+                        )
+                        conn.commit()
+            break
     except KeyboardInterrupt:
         print("")
         print("Exit")
