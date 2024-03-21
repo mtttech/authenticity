@@ -2,7 +2,7 @@
 read.py
 Author:     Marcus T Taylor
 Created:    14.03.24
-Modified:   16.03.24
+Modified:   21.03.24
 """
 from sqlalchemy import select
 
