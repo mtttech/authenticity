@@ -6,7 +6,9 @@
 > ### Fitness
 > - the condition of being physically fit and healthy.
 
-I am writing an application for tracking my workouts. The code here is currently a simple mock write up and far from a finished product.
+I am writing an application for tracking my workouts. The code here is currently a mock application and thus a far from a finished product.
+
+I want to make it a fully graphical application but its currently written as a generic command line application. Mostly working out the behind-the-scenes functionality at present.
 
 
 ## Dependencies
@@ -21,7 +23,7 @@ Authenticity Fitness requires the following dependencies.
 
 ```
 # Clone authfit.
-git clone https://codeberg.org/mtttech/authenticity-fitness.git
+git clone https://github.com/mtttech/authenticity-fitness.git
 
 
 # Change into the directory and install it using poetry.
