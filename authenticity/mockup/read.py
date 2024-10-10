@@ -6,7 +6,7 @@ Modified:   21.03.24
 """
 from sqlalchemy import select
 
-from authfit.models import Exercises, Workouts, engine
+from authenticity.models import Exercises, Workouts, engine
 
 
 def main() -> None:

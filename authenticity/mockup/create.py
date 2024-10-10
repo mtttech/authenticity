@@ -8,7 +8,7 @@ from datetime import datetime
 
 from sqlalchemy import insert
 
-from authfit.models import Exercises, Workouts, engine
+from authenticity.models import Exercises, Workouts, engine
 
 
 def enter_number(message: str) -> int:
