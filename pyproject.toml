@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "authfit"
+name = "authenticity"
 version = "0.2.5"
 description = "A basic workout tracking application."
 authors = ["Marcus T Taylor <mtaylor9754@hotmail.com>"]
@@ -10,7 +10,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3 :: Only",
 ]
-packages = [{include = "authfit"}]
+packages = [{include = "authenticity"}]
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -18,10 +18,10 @@ customtkinter = "^5.2.1"
 sqlalchemy = "^2.0.23"
 
 [tool.poetry.scripts]
-authfit-create='authfit.mockup.create:main'
-authfit-delete='authfit.mockup.delete:main'
-authfit-gui='authfit.gui:main'
-authfit-read='authfit.mockup.read:main'
+af-create='authenticity.mockup.create:main'
+af-delete='authenticity.mockup.delete:main'
+af-gui='authenticity.gui:main'
+af-read='authenticity.mockup.read:main'
 
 [build-system]
 requires = ["poetry-core"]
