@@ -1,15 +1,14 @@
-# AUTHENTICITY FITNESS
+# AUTHENTICITY 
 
-> ### Authencity
+**Authenticity**, formerly called "Authenticity Fitness" is a fitness application written in Python.
+
+> ### Authenticity
 > - the quality of being authentic.
 
 > ### Fitness
 > - the condition of being physically fit and healthy.
 
-I am writing an application for tracking my workouts. The code here is currently a mock application and thus a far from a finished product.
-
-I want to make it a fully graphical application but its currently written as a generic command line application. Mostly working out the behind-the-scenes functionality at present.
-
+**DISCLAIMER:** This codebase is currently a mock writeup. Thus, its far from a finished product.
 
 ## Dependencies
 
@@ -22,35 +21,36 @@ Authenticity Fitness requires the following dependencies.
 ## Installation & Usage
 
 ```
-# Clone authfit.
-git clone https://github.com/mtttech/authenticity-fitness.git
+# Clone authenticity.
+git clone https://github.com/mtttech/authenticity.git
 
+# Change into the directory.
+cd authenticity
 
-# Change into the directory and install it using poetry.
-cd authfit
+# Install using Poetry.
 poetry install
 ```
 
 You can add an exercise with the following command.
 
 ```
-poetry run authfit-create
+poetry run af-create
 ```
 
 You can empty all the databases with the following command.
 
 ```
-poetry run authfit-delete
+poetry run af-delete
 ```
 
 You can view the gui mockup with the following command.
 
 ```
-poetry run authfit-gui
+poetry run af-gui
 ```
 
 You can view the workout information stored in the database with the following command.
 
 ```
-poetry run authfit-read
+poetry run af-read
 ```
