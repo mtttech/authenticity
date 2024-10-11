@@ -4,6 +4,7 @@ Author:     Marcus T Taylor
 Created:    26.11.23
 Modified:   13.03.24
 """
+
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base
 
