@@ -1,22 +1,21 @@
 # AUTHENTICITY 
 
-**Authenticity**, formerly called "Authenticity Fitness" is a fitness application written in Python.
+**Authenticity**, formerly called *Authenticity Fitness* is a workout tracking application written in Python.
 
-> ### Authenticity
+> #### Authenticity
 > - the quality of being authentic.
 
-> ### Fitness
+> #### Fitness
 > - the condition of being physically fit and healthy.
 
 **DISCLAIMER:** This codebase is currently a mock writeup. Thus, its far from a finished product.
 
 ## Dependencies
 
-Authenticity Fitness requires the following dependencies.
+Authenticity Fitness "requires" the following dependencies - really only SQLAlchemy thus far.
 
 * [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
 * [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy)
-
 
 ## Installation & Usage
 
@@ -31,11 +30,21 @@ cd authenticity
 poetry install
 ```
 
+### Add Exercises
+
 You can add an exercise with the following command.
 
 ```
 poetry run af-create
 ```
+
+The following prompts will occur.
+
+* Name your workout.
+* State how many exercises were done.
+* State the name of the exercise, how many sets, reps in each set and how much weight was used.
+
+### Delete Exercises
 
 You can empty all the databases with the following command.
 
@@ -43,11 +52,15 @@ You can empty all the databases with the following command.
 poetry run af-delete
 ```
 
+### View mock GUI
+
 You can view the gui mockup with the following command.
 
 ```
 poetry run af-gui
 ```
+
+### View Workout
 
 You can view the workout information stored in the database with the following command.
 
