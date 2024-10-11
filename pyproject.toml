@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "authenticity"
-version = "0.2.5"
+version = "0.2.6"
 description = "A basic workout tracking application."
 authors = ["Marcus T Taylor <mtaylor9754@hotmail.com>"]
 license = "MIT"
@@ -18,10 +18,10 @@ customtkinter = "^5.2.1"
 sqlalchemy = "^2.0.23"
 
 [tool.poetry.scripts]
-af-create='authenticity.mockup.create:main'
-af-delete='authenticity.mockup.delete:main'
+af-create='authenticity.mockup:create_workouts'
+af-delete='authenticity.mockup:delete_workouts'
 af-gui='authenticity.gui:main'
-af-read='authenticity.mockup.read:main'
+af-read='authenticity.mockup:read_workouts'
 
 [build-system]
 requires = ["poetry-core"]
