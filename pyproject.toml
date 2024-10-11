@@ -16,6 +16,7 @@ packages = [{include = "authenticity"}]
 python = "^3.9"
 customtkinter = "^5.2.1"
 sqlalchemy = "^2.0.23"
+click = "^8.1.7"
 
 [tool.poetry.scripts]
 af-create='authenticity.mockup:create_workouts'
