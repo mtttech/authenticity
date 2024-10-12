@@ -14,6 +14,7 @@
 
 Authenticity Fitness "requires" the following dependencies - really only SQLAlchemy thus far.
 
+* [click](https://github.com/pallets/click)
 * [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
 * [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy)
 
@@ -42,7 +43,7 @@ The following prompts will occur.
 
 * Name your workout.
 * State how many exercises were done.
-* State the name of the exercise, how many sets, reps in each set and how much weight was used.
+* State the name of the targeted body part, the exercise, how many sets, reps in each set and how much weight was used.
 
 ### Delete Exercises
 
