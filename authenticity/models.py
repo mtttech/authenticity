@@ -2,13 +2,13 @@
 models.py
 Author:     Marcus T Taylor
 Created:    26.11.23
-Modified:   13.03.24
+Modified:   11.10.24
 """
 
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base
 
-engine = create_engine("sqlite:///authenticity/authfit.db")
+engine = create_engine("sqlite:///authenticity/authtenticity.db")
 Base = declarative_base()
 
 
