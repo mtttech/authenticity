@@ -2,21 +2,23 @@
 mockup.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   11.10.24
+Modified:   12.10.24
 """
 
 from datetime import datetime
 
 import click
-from sqlalchemy import delete, insert, select
 
 from authenticity.exercises import exercise_list
 from authenticity.models import Exercises, Workouts, engine
 
 
 def create_workouts() -> None:
+    from sqlalchemy import insert
+
     workout_title = click.prompt(
-        "Give your workout session a name (i.e: My Meditation Session, etc)."
+        "Give your workout session a name (i.e: My Meditation Session, etc).",
+        prompt_suffix=" ",
     )
     # TODO: Add something to track the workout's duration, perhaps? >:(
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
@@ -29,29 +31,39 @@ def create_workouts() -> None:
         conn.commit()
 
         num_of_exercises = click.prompt(
-            "How many exercises were performed during your workout?", type=int
+            "How many exercises were performed?",
+            prompt_suffix=" ",
+            type=int,
         )
         # Ask info for each exercise
         for _ in range(1, num_of_exercises + 1):
             target = click.prompt(
-                "Enter the targeted body part for the exercise.",
+                "Enter the targeted body part.",
+                prompt_suffix=" ",
                 show_choices=True,
                 type=click.Choice(list(exercise_list.keys()), case_sensitive=False),
             )
             exercise = click.prompt(
-                "Enter the exercise.",
+                "Enter the exercise performed.",
+                prompt_suffix=" ",
                 show_choices=True,
                 type=click.Choice(exercise_list[target], case_sensitive=False),
             )
             num_of_sets = click.prompt(
-                "How many sets were performed during this workout?", type=int
+                "How many sets were performed?",
+                prompt_suffix=" ",
+                type=int,
             )
             weight = click.prompt(
-                "How much weight was used during this workout?", type=int
+                "How much weight was used?",
+                prompt_suffix=" ",
+                type=int,
             )
             for set_number in range(1, num_of_sets + 1):
                 num_of_reps = click.prompt(
-                    f"How many reps were performed during set {set_number}?", type=int
+                    f"How many reps were performed for set {set_number}?",
+                    prompt_suffix=" ",
+                    type=int,
                 )
                 conn.execute(
                     insert(Exercises).values(
@@ -66,14 +78,22 @@ def create_workouts() -> None:
 
 
 def delete_workouts() -> None:
-    print("Deleting exercise/workout data...")
-    with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
-        conn.execute(delete(Workouts))
-        conn.execute(delete(Exercises))
-        conn.commit()
+    @click.command()
+    @click.option("--id", default=1, help="Workout ID to delete.")
+    def delete_workout(id):
+        from sqlalchemy import delete
+
+        with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
+            conn.execute(delete(Workouts))
+            conn.execute(delete(Exercises).where(Exercises.workout_id == id))
+            conn.commit()
+
+    delete_workout()
 
 
 def read_workouts() -> None:
+    from sqlalchemy import select
+
     print("Displaying exercise/workout data from database.")
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
         results = conn.execute(select(Workouts.workout_title))
@@ -95,14 +115,3 @@ def read_workouts() -> None:
         )
         for row in conn.execute(stmt):
             print(row)
-
-
-def main():
-    @click.command()
-    @click.option("--count", default=1, help="Number of greetings.")
-    @click.option("--name", prompt="Your name", help="The person to greet.")
-    def hello(count, name):
-        for x in range(count):
-            click.echo(f"Hello {name}!")
-
-    hello()
