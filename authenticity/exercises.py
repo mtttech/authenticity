@@ -2,8 +2,9 @@
 exercises.py
 Author:     Marcus T Taylor
 Created:    11.10.24
-Modified:   11.10.24
+Modified:   12.10.24
 """
+
 exercise_list = {
     "Chest": [
         "Around The World",
@@ -94,6 +95,25 @@ exercise_list = {
         "Incline Prone Bicep Curl",
         "Preacher Hammer Curl",
         "Single-arm Hammer Curl",
+    ],
+    "Core": [
+        "Bird-Dog Plank",
+        "Decline Dumbbell Crunches",
+        "Dumbbell Plank Drag",
+        "Dumbbell Plank Rowing",
+        "Hanging Knee Raises",
+        "Leg Raises",
+        "Oblique crunches",
+        "Reverse Crunches",
+        "Russian Twist",
+        "Side Plank",
+        "Side Plank Hip Lifts",
+        "Side-plank Rotation",
+        "Standing Oblique Rotation",
+        "Straight-Arm Crunches",
+        "Toe Touch Crunches",
+        "Wood Chop (High to Low)",
+        "Wood Chop (Low to High)",
     ],
 }
 # https://thefitnessphantom.com/list-of-dumbbell-exercises
