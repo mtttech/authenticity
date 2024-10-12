@@ -10,11 +10,11 @@ from datetime import datetime
 import click
 from sqlalchemy import delete, insert, select
 
+from authenticity.exercises import exercise_list
 from authenticity.models import Exercises, Workouts, engine
 
 
 def create_workouts() -> None:
-    exercises = ("Deadlift", "Dumbbell Curl")
     workout_title = click.prompt(
         "Give your workout session a name (i.e: My Meditation Session, etc)."
     )
@@ -33,10 +33,15 @@ def create_workouts() -> None:
         )
         # Ask info for each exercise
         for _ in range(1, num_of_exercises + 1):
+            target = click.prompt(
+                "Enter the targeted body part for the exercise.",
+                show_choices=True,
+                type=click.Choice(list(exercise_list.keys()), case_sensitive=False),
+            )
             exercise = click.prompt(
                 "Enter the exercise.",
                 show_choices=True,
-                type=click.Choice(exercises, case_sensitive=False),
+                type=click.Choice(exercise_list[target], case_sensitive=False),
             )
             num_of_sets = click.prompt(
                 "How many sets were performed during this workout?", type=int
@@ -90,19 +95,6 @@ def read_workouts() -> None:
         )
         for row in conn.execute(stmt):
             print(row)
-
-        # Workout datasheet example
-        try:
-            stmt = select(Workouts).where(Workouts.workout_id == 1)
-            workout_id, workout_title, workout_date = [r for r in conn.execute(stmt)][0]
-            print(workout_title)
-            print(workout_date)
-            stmt = select(Exercises).where(Exercises.workout_id == workout_id)
-            for row in conn.execute(stmt):
-                exercise, set_count, reps, weight = row[2:]
-                print(set_count, exercise, reps, weight)
-        except IndexError:
-            pass
 
 
 def main():
