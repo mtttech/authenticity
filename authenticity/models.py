@@ -8,7 +8,7 @@ Modified:   11.10.24
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base
 
-engine = create_engine("sqlite:///authenticity/authtenticity.db")
+engine = create_engine("sqlite:///authenticity/authenticity.db")
 Base = declarative_base()
 
 
