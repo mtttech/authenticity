@@ -140,4 +140,4 @@ dmypy.json
 poetry.lock
 
 # Misc
-authenticity/authenticity.db
+authenticity.db
