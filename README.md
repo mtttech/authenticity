@@ -47,10 +47,16 @@ The following prompts will occur.
 
 ### Delete Exercises
 
-You can empty all the databases with the following command.
+You can delete all records within the databases with the following command.
 
 ```
 poetry run af-delete
+```
+
+You can delete a specific workout record ID from the database with the following command.
+
+```
+poetry run af-delete --wid=<WID>
 ```
 
 ### View mock GUI
