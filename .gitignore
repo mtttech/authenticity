@@ -138,3 +138,6 @@ dmypy.json
 
 # Poetry specific
 poetry.lock
+
+# Misc
+authenticity/authenticity.db
