@@ -15,7 +15,6 @@
 Authenticity Fitness "requires" the following dependencies - really only SQLAlchemy thus far.
 
 * [click](https://github.com/pallets/click)
-* [customtkinter](https://github.com/TomSchimansky/CustomTkinter)
 * [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy)
 
 ## Installation & Usage
@@ -57,14 +56,6 @@ You can delete a specific workout record ID from the database with the following
 
 ```
 poetry run af-delete --wid=<WID>
-```
-
-### View mock GUI
-
-You can view the gui mockup with the following command.
-
-```
-poetry run af-gui
 ```
 
 ### View Workout
