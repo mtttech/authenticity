@@ -16,12 +16,13 @@ packages = [{include = "authenticity"}]
 python = "^3.9"
 sqlalchemy = "^2.0.23"
 click = "^8.1.7"
+prompt-toolkit = "^3.0.48"
 
 [tool.poetry.scripts]
 af-create='authenticity.mockup:_create'
 af-delete='authenticity.mockup:_delete'
 af-read='authenticity.mockup:_read'
-af-gui='authenticity.gui:main'
+af-cli='authenticity.cli:main'
 
 [build-system]
 requires = ["poetry-core"]
