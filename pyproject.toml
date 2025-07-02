@@ -18,9 +18,9 @@ sqlalchemy = "^2.0.23"
 click = "^8.1.7"
 
 [tool.poetry.scripts]
-af-create='authenticity.mockup:_create'
-af-delete='authenticity.mockup:_delete'
-af-read='authenticity.mockup:_read'
+af-create='authenticity.cli:_create'
+af-delete='authenticity.cli:_delete'
+af-read='authenticity.cli:_read'
 
 [build-system]
 requires = ["poetry-core"]
