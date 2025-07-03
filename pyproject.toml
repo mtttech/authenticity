@@ -1,27 +1,32 @@
-[tool.poetry]
+[project]
 name = "authenticity"
 version = "0.2.7"
-description = "A workout tracking application."
-authors = ["Marcus T Taylor <mtaylor9754@hotmail.com>"]
-license = "MIT"
+description = "Workout tracking application."
+authors = [
+    { name = "Marcus T Taylor", email = "mtaylor9754@hotmail.com" }
+]
+license = {text="MIT"}
 readme = "docs/README.md"
 classifiers = [
     "Intended Audience :: End Users/Desktop",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3 :: Only",
 ]
-packages = [{include = "src/authenticity"}]
+packages = [
+    { include = "src/authenticity/*.db" },
+]
+requires-python = ">=3.12"
+dependencies = [
+    'sqlalchemy',
+    'click',
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-sqlalchemy = "^2.0.23"
-click = "^8.1.7"
-
-[tool.poetry.scripts]
+[project.scripts]
 af-create='authenticity.cli:_create'
 af-delete='authenticity.cli:_delete'
 af-read='authenticity.cli:_read'
+authfit='authenticity.cli:main'
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
