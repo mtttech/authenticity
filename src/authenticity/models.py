@@ -10,7 +10,11 @@ import os
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base
 
-db_path = os.path.join(os.path.expanduser("~"), ".authenticity/authenticity.db")
+app_dir = os.path.join(os.path.expanduser("~"), ".authenticity")
+if not os.path.exists(app_dir):
+    os.mkdir(app_dir)
+
+db_path = os.path.join(app_dir, "authenticity.db")
 engine = create_engine(f"sqlite:///{db_path}")
 Base = declarative_base()
 
