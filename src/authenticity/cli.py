@@ -103,7 +103,9 @@ def _delete() -> None:
     delete_workout()
 
 
-def _read() -> None:
+@click.command()
+@click.option("--read")
+def main() -> None:
     from sqlalchemy import select
 
     print("Displaying exercise/workout data from database.")
