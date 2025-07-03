@@ -2,13 +2,16 @@
 models.py
 Author:     Marcus T Taylor
 Created:    26.11.23
-Modified:   11.10.24
+Modified:   03.07.25
 """
+
+import os
 
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base
 
-engine = create_engine("sqlite:///authenticity/authenticity.db")
+db_path = os.path.join(os.path.expanduser("~"), "authenticity.db")
+engine = create_engine(f"sqlite:///{db_path}")
 Base = declarative_base()
 
 
