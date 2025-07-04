@@ -14,12 +14,14 @@ from authenticity.models import Exercises, Workouts, engine
 
 
 @click.group()
-def cli():
-    pass
+@click.pass_context
+def cli(ctx):
+    ctx.ensure_object(dict)
 
 
 @cli.command("add", help="Add workout")
-def add() -> None:
+@click.pass_context
+def add(ctx) -> None:
     def create_workout():
         from sqlalchemy import insert
 
@@ -91,8 +93,9 @@ def add() -> None:
 
 
 @cli.command("delete", help="Delete workout")
-@click.option("--wid", default=1, help="ID number")
-def delete_workout(wid):
+@click.option("--wid", default=1, help="WID number")
+@click.pass_context
+def delete(ctx, wid):
     from sqlalchemy import delete
 
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
@@ -107,8 +110,8 @@ def delete_workout(wid):
 
 
 @cli.command("view", help="View workout")
-#@click.option("--read", required=True)
-def main() -> None:
+@click.pass_context
+def view(ctx) -> None:
     from sqlalchemy import select
 
     print("Displaying exercise/workout data from database.")
