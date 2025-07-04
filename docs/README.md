@@ -1,6 +1,6 @@
 # AUTHENTICITY 
 
-**Authenticity**, formerly called *Authenticity Fitness* is a workout tracking application written in Python.
+**Authenticity**, formerly called **Authenticity Fitness** is a workout tracking application written in Python.
 
 > #### Authenticity
 > - the quality of being authentic.
@@ -14,7 +14,7 @@
 
 Authenticity Fitness "requires" the following dependencies - really only SQLAlchemy thus far.
 
-* [click](https://github.com/pallets/click)
+* [rich-click](https://github.com/ewels/rich-click)
 * [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy)
 
 ## Installation & Usage
