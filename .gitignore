@@ -135,9 +135,3 @@ dmypy.json
 
 # OS Specific
 .DS_Store
-
-# Poetry specific
-poetry.lock
-
-# Misc
-authenticity.db
