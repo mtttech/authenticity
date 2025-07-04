@@ -21,7 +21,6 @@ dependencies = [
 [project.scripts]
 af-create='authenticity.cli:_create'
 af-delete='authenticity.cli:_delete'
-af-read='authenticity.cli:_read'
 authfit='authenticity.cli:main'
 
 [build-system]
