@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   02.07.25
+Modified:   04.07.25
 """
 
 from datetime import datetime
@@ -13,7 +13,13 @@ from authenticity.exercises import exercise_list
 from authenticity.models import Exercises, Workouts, engine
 
 
-def _create() -> None:
+@click.group()
+def cli():
+    pass
+
+
+@cli.command("add", help="Add workout")
+def add() -> None:
     def create_workout():
         from sqlalchemy import insert
 
@@ -84,27 +90,24 @@ def _create() -> None:
         exit()
 
 
-def _delete() -> None:
-    @click.command()
-    @click.option("--wid", help="Workout ID to delete.", type=int)
-    def delete_workout(wid):
-        from sqlalchemy import delete
+@cli.command("delete", help="Delete workout")
+@click.option("--wid", default=1, help="ID number")
+def delete_workout(wid):
+    from sqlalchemy import delete
 
-        with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
-            conn.execute(delete(Workouts))
-            if wid is not None:
-                conn.execute(delete(Exercises).where(Exercises.workout_id == wid))
-                print(f"Deleted WID {wid}.")
-            else:
-                conn.execute(delete(Exercises))
-                print("Deleted all records.")
-            conn.commit()
-
-    delete_workout()
+    with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
+        conn.execute(delete(Workouts))
+        if wid is not None:
+            conn.execute(delete(Exercises).where(Exercises.workout_id == wid))
+            print(f"Deleted WID {wid}.")
+        else:
+            conn.execute(delete(Exercises))
+            print("Deleted all records.")
+        conn.commit()
 
 
-@click.command()
-@click.option("--read")
+@cli.command("view", help="View workout")
+#@click.option("--read", required=True)
 def main() -> None:
     from sqlalchemy import select
 
