@@ -18,6 +18,10 @@ dependencies = [
     'rich-click',
 ]
 
+[project.urls]
+Repository = "https://github.com/mtttech/authenticity"
+Issues = "https://github.com/mtttech/authenticity/issues"
+
 [project.scripts]
 authenticity='authenticity.cli:cli'
 
