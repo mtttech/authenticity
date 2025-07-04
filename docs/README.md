@@ -19,6 +19,9 @@ Authenticity Fitness "requires" the following dependencies - really only SQLAlch
 
 ## Installation & Usage
 
+
+### Installation
+
 ```
 # Clone authenticity.
 git clone https://github.com/mtttech/authenticity.git
@@ -30,38 +33,16 @@ cd authenticity
 poetry install
 ```
 
-### Add Exercises
-
-You can add an exercise with the following command.
+### Usage
 
 ```
-poetry run af-create
-```
+Usage: authenticity [OPTIONS] COMMAND [ARGS]...
 
-The following prompts will occur.
+Options:
+  --help  Show this message and exit.
 
-* Name your workout.
-* State how many exercises were done.
-* State the name of the targeted body part, the exercise, how many sets, reps in each set and how much weight was used.
-
-### Delete Exercises
-
-You can delete all records within the databases with the following command.
-
-```
-poetry run af-delete
-```
-
-You can delete a specific workout record ID from the database with the following command.
-
-```
-poetry run af-delete --wid=<WID>
-```
-
-### View Workout
-
-You can view the workout information stored in the database with the following command.
-
-```
-poetry run af-read
+Commands:
+  add     Add workout
+  delete  Delete workout
+  view    View workout
 ```
