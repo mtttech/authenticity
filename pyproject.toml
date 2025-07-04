@@ -19,9 +19,7 @@ dependencies = [
 ]
 
 [project.scripts]
-af-create='authenticity.cli:_create'
-af-delete='authenticity.cli:_delete'
-authfit='authenticity.cli:main'
+authenticity='authenticity.cli:cli'
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
