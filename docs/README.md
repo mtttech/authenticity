@@ -8,11 +8,11 @@
 > #### Fitness
 > - the condition of being physically fit and healthy.
 
-**DISCLAIMER:** This codebase is currently a mock writeup. Thus, its far from a finished product.
+**DISCLAIMER:** This codebase is currently a mock writeup.
 
 ## Dependencies
 
-Authenticity Fitness "requires" the following dependencies - really only SQLAlchemy thus far.
+Authenticity Fitness "requires" the following dependencies.
 
 * [rich-click](https://github.com/ewels/rich-click)
 * [SQLAlchemy](https://github.com/sqlalchemy/sqlalchemy)
@@ -21,6 +21,8 @@ Authenticity Fitness "requires" the following dependencies - really only SQLAlch
 
 
 ### Installation
+
+Clone the repo and install the project.
 
 ```
 # Clone authenticity.
@@ -35,14 +37,31 @@ poetry install
 
 ### Usage
 
+Run the following command in a virtual environment.
+
 ```
-Usage: authenticity [OPTIONS] COMMAND [ARGS]...
+poetry run authenticity
+```
 
-Options:
-  --help  Show this message and exit.
+OR if installed.
 
-Commands:
-  add     Add workout
-  delete  Delete workout
-  view    View workout
+```
+authenticity
+```
+
+You can view a full list of commands with the following command.
+
+```
+$authenticity --help
+                                                                                                                      
+ Usage: authenticity [OPTIONS] COMMAND [ARGS]...                                                                                                       
+                                                                                                                                                       
+╭─ Options ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --help      Show this message and exit.                                                                                                             │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Commands ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ add                                        Add a workout.                                                                                           │
+│ delete                                     Delete a workout.                                                                                        │
+│ view                                       View workouts.                                                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
