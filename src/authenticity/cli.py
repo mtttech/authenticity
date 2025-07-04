@@ -7,7 +7,7 @@ Modified:   04.07.25
 
 from datetime import datetime
 
-import click
+import rich_click as click
 
 from authenticity.exercises import exercise_list
 from authenticity.models import Exercises, Workouts, engine
@@ -19,7 +19,7 @@ def cli(ctx):
     ctx.ensure_object(dict)
 
 
-@cli.command("add", help="Add workout")
+@cli.command("add", help="Add a workout.")
 @click.pass_context
 def add(ctx) -> None:
     def create_workout():
@@ -30,6 +30,7 @@ def add(ctx) -> None:
             prompt_suffix=" ",
         )
         # TODO: Add something to track the workout's duration, perhaps? >:(
+        # TODO: Functional but lets clean this system up a lil bit.
         with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
             result = conn.execute(
                 insert(Workouts).values(
@@ -92,8 +93,8 @@ def add(ctx) -> None:
         exit()
 
 
-@cli.command("delete", help="Delete workout")
-@click.option("--wid", default=1, help="WID number")
+@cli.command("delete", help="Delete a workout.")
+@click.option("--wid", required=True, help="Workout ID number to delete.")
 @click.pass_context
 def delete(ctx, wid):
     from sqlalchemy import delete
@@ -109,7 +110,7 @@ def delete(ctx, wid):
         conn.commit()
 
 
-@cli.command("view", help="View workout")
+@cli.command("view", help="View workouts.")
 @click.pass_context
 def view(ctx) -> None:
     from sqlalchemy import select
