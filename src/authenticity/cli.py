@@ -11,7 +11,7 @@ import rich_click as click
 from rich.console import Console
 from rich.table import Table
 
-from authenticity.exercises import exercise_list
+from authenticity.exercises import get_exercises_by_group, get_muscle_groups
 from authenticity.models import Exercises, Workouts, engine
 
 
@@ -53,13 +53,15 @@ def add(ctx) -> None:
                     "Enter the targeted body part.",
                     prompt_suffix=" ",
                     show_choices=True,
-                    type=click.Choice(list(exercise_list.keys()), case_sensitive=False),
+                    type=click.Choice(get_muscle_groups(), case_sensitive=False),
                 )
                 exercise = click.prompt(
                     "Enter the exercise performed.",
                     prompt_suffix=" ",
                     show_choices=True,
-                    type=click.Choice(exercise_list[target], case_sensitive=False),
+                    type=click.Choice(
+                        get_exercises_by_group(target), case_sensitive=False
+                    ),
                 )
                 num_of_sets = click.prompt(
                     "How many sets were performed?",
@@ -113,7 +115,7 @@ def delete(ctx, wid):
 
 
 @cli.command("view", help="View a workout.")
-#@click.option("--wid", required=True, help="Workout ID number to delete.")
+# @click.option("--wid", required=True, help="Workout ID number to delete.")
 @click.pass_context
 def view(ctx) -> None:
     from sqlalchemy import select
