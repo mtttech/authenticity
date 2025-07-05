@@ -8,6 +8,8 @@ Modified:   04.07.25
 from datetime import datetime
 
 import rich_click as click
+from rich.console import Console
+from rich.table import Table
 
 from authenticity.exercises import exercise_list
 from authenticity.models import Exercises, Workouts, engine
@@ -110,16 +112,24 @@ def delete(ctx, wid):
         conn.commit()
 
 
-@cli.command("view", help="View workouts.")
+@cli.command("view", help="View a workout.")
+#@click.option("--wid", required=True, help="Workout ID number to delete.")
 @click.pass_context
 def view(ctx) -> None:
     from sqlalchemy import select
 
-    print("Displaying exercise/workout data from database.")
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
         results = conn.execute(select(Workouts.workout_title))
+        console = Console()
+        table = Table()
         for row in results:
-            print(row)
+            table = Table(title=row[0])
+
+        table.add_column("Date")
+        table.add_column("Exercise")
+        table.add_column("Weight")
+        table.add_column("Set")
+        table.add_column("Reps")
 
         stmt = (
             select(
@@ -135,4 +145,6 @@ def view(ctx) -> None:
             .join(Exercises, Workouts.workout_id == Exercises.workout_id)
         )
         for row in conn.execute(stmt):
-            print(row)
+            table.add_row(row[1], row[3], str(row[4]), str(row[5]), str(row[6]))
+
+        console.print(table)
