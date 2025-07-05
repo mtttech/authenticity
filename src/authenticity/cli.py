@@ -119,17 +119,16 @@ def view(ctx) -> None:
     from sqlalchemy import select
 
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
-        results = conn.execute(select(Workouts.workout_title))
+        results = conn.execute(select(Workouts.workout_title, Workouts.workout_date))
         console = Console()
         table = Table()
         for row in results:
-            table = Table(title=row[0])
+            table = Table(title=f"{row[0]} on {row[1]}")
 
-        table.add_column("Date")
         table.add_column("Exercise")
-        table.add_column("Weight")
-        table.add_column("Set")
-        table.add_column("Reps")
+        table.add_column("Weight", justify="center")
+        table.add_column("Set", justify="center")
+        table.add_column("Reps", justify="center")
 
         stmt = (
             select(
@@ -145,6 +144,8 @@ def view(ctx) -> None:
             .join(Exercises, Workouts.workout_id == Exercises.workout_id)
         )
         for row in conn.execute(stmt):
-            table.add_row(row[1], row[3], str(row[4]), str(row[5]), str(row[6]))
+            table.add_row(row[3], str(row[4]), str(row[5]), str(row[6]))
 
+        print()
         console.print(table)
+        print()
