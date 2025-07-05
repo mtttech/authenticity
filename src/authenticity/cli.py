@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   04.07.25
+Modified:   05.07.25
 """
 
 from datetime import datetime
@@ -28,7 +28,7 @@ def add(ctx) -> None:
         from sqlalchemy import insert
 
         workout_title = click.prompt(
-            "Give your workout session a name (i.e: My Meditation Session, etc).",
+            "Name your workout session (i.e: My Meditation Session, etc).",
             prompt_suffix=" ",
         )
         # TODO: Add something to track the workout's duration, perhaps? >:(
@@ -47,9 +47,9 @@ def add(ctx) -> None:
                 prompt_suffix=" ",
                 type=int,
             )
-            # Ask info for each exercise
+            # Ask for workout info for each exercise
             for _ in range(1, num_of_exercises + 1):
-                target = click.prompt(
+                muscle_group = click.prompt(
                     "Enter the targeted body part.",
                     prompt_suffix=" ",
                     show_choices=True,
@@ -60,7 +60,7 @@ def add(ctx) -> None:
                     prompt_suffix=" ",
                     show_choices=True,
                     type=click.Choice(
-                        get_exercises_by_group(target), case_sensitive=False
+                        get_exercises_by_group(muscle_group), case_sensitive=False
                     ),
                 )
                 num_of_sets = click.prompt(
