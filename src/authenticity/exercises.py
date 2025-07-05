@@ -5,6 +5,7 @@ Created:    11.10.24
 Modified:   05.07.24
 """
 
+# https://thefitnessphantom.com/list-of-dumbbell-exercises
 exercise_list = {
     "Abs and Obliques": [
         "Bird-Dog Plank",
@@ -76,8 +77,7 @@ exercise_list = {
         "Underhand Grip Chest Press",
     ],
     "Forearm": [
-        "Dumbbell Farmers Walk"
-        "Dumbbell Wrist Curl",
+        "Dumbbell Farmers Walk" "Dumbbell Wrist Curl",
         "Dumbbell Wrist Extension",
         "Dumbbell Wrist Rotation",
         "Neutral Grip Wrist Curl",
@@ -142,4 +142,11 @@ exercise_list = {
         "Step-up",
     ],
 }
-# https://thefitnessphantom.com/list-of-dumbbell-exercises
+
+
+def get_exercises_by_group(muscle_group: str) -> list[str]:
+    return exercise_list[muscle_group]
+
+
+def get_muscle_groups() -> list[str]:
+    return list(exercise_list.keys())
