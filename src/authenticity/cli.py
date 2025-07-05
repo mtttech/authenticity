@@ -115,13 +115,17 @@ def delete(ctx, wid):
 
 
 @cli.command("view", help="View a workout.")
-# @click.option("--wid", required=True, help="Workout ID number to delete.")
+@click.option("--wid", required=True, help="Workout ID number to view.")
 @click.pass_context
-def view(ctx) -> None:
+def view(ctx, wid) -> None:
     from sqlalchemy import select
 
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
-        results = conn.execute(select(Workouts.workout_title, Workouts.workout_date))
+        results = conn.execute(
+            select(Workouts.workout_title, Workouts.workout_date).where(
+                Workouts.workout_id == wid
+            )
+        )
         console = Console()
         table = Table()
         for row in results:
@@ -143,7 +147,7 @@ def view(ctx) -> None:
                 Exercises.exercise_reps,
             )
             .select_from(Workouts)
-            .join(Exercises, Workouts.workout_id == Exercises.workout_id)
+            .join(Exercises, wid == Exercises.workout_id)
         )
         for row in conn.execute(stmt):
             table.add_row(row[3], str(row[4]), str(row[5]), str(row[6]))
