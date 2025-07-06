@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   05.07.25
+Modified:   06.07.25
 """
 
 from datetime import datetime
@@ -13,6 +13,8 @@ from rich.table import Table
 
 from authenticity.exercises import get_exercises_by_group, get_muscle_groups
 from authenticity.models import Exercises, Workouts, engine
+
+console = Console()
 
 
 @click.group()
@@ -104,14 +106,10 @@ def delete(ctx, wid):
     from sqlalchemy import delete
 
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
-        conn.execute(delete(Workouts))
-        if wid is not None:
-            conn.execute(delete(Exercises).where(Exercises.workout_id == wid))
-            print(f"Deleted WID {wid}.")
-        else:
-            conn.execute(delete(Exercises))
-            print("Deleted all records.")
+        conn.execute(delete(Workouts).where(Workouts.workout_id == wid))
+        conn.execute(delete(Exercises).where(Exercises.workout_id == wid))
         conn.commit()
+        console.print(f"Deleted WID {wid}.")
 
 
 @cli.command("view", help="View a workout.")
@@ -121,15 +119,22 @@ def view(ctx, wid) -> None:
     from sqlalchemy import select
 
     with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
-        results = conn.execute(
+        workout_results = conn.execute(
             select(Workouts.workout_title, Workouts.workout_date).where(
                 Workouts.workout_id == wid
             )
         )
-        console = Console()
+
+        workout_results = workout_results.fetchone()
+
+        # No workout found for the requested WID.
+        if workout_results == None:
+            console.print(f"No workout found for WID {wid}.")
+            return
+
         table = Table()
-        for row in results:
-            table = Table(title=f"{row[0]} on {row[1]}")
+        session_name, session_date = workout_results
+        table = Table(title=f"{session_name} on {session_date}")
 
         table.add_column("Exercise")
         table.add_column("Weight", justify="center")
