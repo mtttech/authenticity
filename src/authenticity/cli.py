@@ -14,7 +14,7 @@ from rich.table import Table
 from authenticity.exercises import get_exercises_by_group, get_muscle_groups
 from authenticity.models import Exercises, Workouts, engine
 
-console = Console()
+console = Console(width=80)
 
 
 @click.group()
@@ -124,7 +124,6 @@ def view(ctx, wid) -> None:
                 Workouts.workout_id == wid
             )
         )
-
         workout_results = workout_results.fetchone()
 
         # No workout found for the requested WID.
@@ -132,30 +131,22 @@ def view(ctx, wid) -> None:
             console.print(f"No workout found for WID {wid}.")
             return
 
-        table = Table()
         session_name, session_date = workout_results
-        table = Table(title=f"{session_name} on {session_date}")
+        table = Table(show_lines=True, title=f"{session_name} on {session_date}")
 
         table.add_column("Exercise")
         table.add_column("Weight", justify="center")
         table.add_column("Set", justify="center")
         table.add_column("Reps", justify="center")
 
-        stmt = (
-            select(
-                Workouts.workout_id,
-                Workouts.workout_date,
-                Workouts.workout_title,
-                Exercises.exercise_name,
-                Exercises.exercise_weight,
-                Exercises.exercise_set,
-                Exercises.exercise_reps,
-            )
-            .select_from(Workouts)
-            .join(Exercises, wid == Exercises.workout_id)
-        )
+        stmt = select(
+            Exercises.exercise_name,
+            Exercises.exercise_weight,
+            Exercises.exercise_set,
+            Exercises.exercise_reps,
+        ).where(Exercises.workout_id == wid)
         for row in conn.execute(stmt):
-            table.add_row(row[3], str(row[4]), str(row[5]), str(row[6]))
+            table.add_row(row[0], str(row[1]), str(row[2]), str(row[3]))
 
         print()
         console.print(table)
