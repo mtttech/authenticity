@@ -131,8 +131,8 @@ def view(ctx, wid) -> None:
             console.print(f"No workout found for WID {wid}.")
             return
 
-        session_name, session_date = workout_results
-        table = Table(show_lines=True, title=f"{session_name} on {session_date}")
+        workout_name, workout_date = workout_results
+        table = Table(show_lines=True, title=f"{workout_name} on {workout_date}")
 
         table.add_column("Exercise")
         table.add_column("Weight", justify="center")
@@ -146,7 +146,13 @@ def view(ctx, wid) -> None:
             Exercises.exercise_reps,
         ).where(Exercises.workout_id == wid)
         for row in conn.execute(stmt):
-            table.add_row(row[0], str(row[1]), str(row[2]), str(row[3]))
+            exercise_name, exercise_weight, exercise_set, exercise_reps = row
+            table.add_row(
+                exercise_name,
+                str(exercise_weight),
+                str(exercise_set),
+                str(exercise_reps),
+            )
 
         print()
         console.print(table)
