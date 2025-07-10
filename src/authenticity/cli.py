@@ -2,10 +2,11 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   06.07.25
+Modified:   10.07.25
 """
 
 from datetime import datetime
+from typing import Any
 
 import rich_click as click
 from rich.console import Console
@@ -14,7 +15,49 @@ from rich.table import Table
 from authenticity.exercises import get_exercises_by_group, get_muscle_groups
 from authenticity.models import Exercises, Workouts, engine
 
-console = Console(width=80)
+console = Console(tab_size=4, width=80)
+
+
+def io(choices: list[str] | int) -> list[str]:
+    """Captures user input from the console.
+
+    Args:
+        choices (list[str]|int): List of choices or max value in a range of numbers.
+
+    Returns:
+        list[str]: A list of the user's responses."""
+
+    def first_and_last(choices: dict[int, Any]) -> tuple[int, int]:
+        indexes = list(choices.keys())
+        return (indexes[0], indexes[-1])
+
+    def index_choices(choices: list[Any]) -> dict[int, Any]:
+        indexed_choices = {}
+        for index, option in enumerate(choices):  # pyright: ignore
+            indexed_choices[index + 1] = option
+        return indexed_choices
+
+    # If using numbers as options, create a range, starting from 1.
+    if isinstance(choices, int):
+        choices = list(str(n + 1) for n in range(choices))
+
+    indexed_choices = index_choices(choices)
+    first_index, last_index = first_and_last(indexed_choices)
+    message = f"\nMake a selection <{first_index}-{last_index}>.\n\n"
+    for index, option in indexed_choices.items():
+        message += f"\t{index}.) {option}\n"
+    console.print(message)
+
+    selections = []
+    try:
+        user_input = int(input(">> "))
+        chosen_option = indexed_choices[user_input]
+        selections.append(chosen_option)
+        choices.remove(chosen_option)
+    except (KeyError, TypeError, ValueError):
+        return io(choices)
+
+    return selections
 
 
 @click.group()
@@ -51,20 +94,12 @@ def add(ctx) -> None:
             )
             # Ask for workout info for each exercise
             for _ in range(1, num_of_exercises + 1):
-                muscle_group = click.prompt(
-                    "Enter the targeted body part.",
-                    prompt_suffix=" ",
-                    show_choices=True,
-                    type=click.Choice(get_muscle_groups(), case_sensitive=False),
-                )
-                exercise = click.prompt(
-                    "Enter the exercise performed.",
-                    prompt_suffix=" ",
-                    show_choices=True,
-                    type=click.Choice(
-                        get_exercises_by_group(muscle_group), case_sensitive=False
-                    ),
-                )
+                console.print("Enter the targeted body part.")
+                muscle_group = io(get_muscle_groups())[0]
+
+                console.print("Enter the exercise performed.")
+                exercise = io(get_exercises_by_group(muscle_group))[0]
+
                 num_of_sets = click.prompt(
                     "How many sets were performed?",
                     prompt_suffix=" ",
