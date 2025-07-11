@@ -145,8 +145,19 @@ exercise_list = {
 
 
 def get_exercises_by_group(muscle_group: str) -> list[str]:
+    """Returns exercises by muscle group.
+
+    Args:
+        muscle_group (str): List of exercises by the specified muscle group.
+
+    Returns:
+        list[str]: A list of exercises by muscle group."""
     return exercise_list[muscle_group]
 
 
 def get_muscle_groups() -> list[str]:
+    """Returns all muscle groups.
+
+    Returns:
+        list[str]: A list of muscle groups."""
     return list(exercise_list.keys())
