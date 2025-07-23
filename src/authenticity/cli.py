@@ -19,7 +19,7 @@ from authenticity.models import Exercises, Workouts, engine
 console = Console(tab_size=4, width=80)
 
 
-def io(choices: list[str] | int) -> str:
+def menu(choices: list[str] | int) -> str:
     """Captures user input from the console.
 
     Args:
@@ -56,7 +56,7 @@ def io(choices: list[str] | int) -> str:
         selections.append(chosen_option)
         choices.remove(chosen_option)
     except (KeyError, TypeError, ValueError):
-        return io(choices)
+        return menu(choices)
 
     return selections[0]
 
@@ -92,10 +92,10 @@ def add(ctx) -> None:
             # Ask for workout info for each exercise
             for _ in range(1, num_of_exercises + 1):
                 console.print("Enter the targeted body part.")
-                muscle_group = io(get_muscle_groups())
+                muscle_group = menu(get_muscle_groups())
 
                 console.print("Enter the exercise performed.")
-                exercise = io(get_exercises_by_group(muscle_group))
+                exercise = menu(get_exercises_by_group(muscle_group))
 
                 num_of_sets = int(Prompt.ask("How many sets were performed?"))
                 weight = int(Prompt.ask("How much weight was used?"))
@@ -119,7 +119,8 @@ def add(ctx) -> None:
     try:
         create_workout()
     except click.exceptions.Abort:
-        print("\nExit")
+        console.print("\n")
+        console.print("Exit")
         exit()
 
 
