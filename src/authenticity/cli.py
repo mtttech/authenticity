@@ -179,6 +179,6 @@ def view(ctx, wid) -> None:
                 str(exercise_reps),
             )
 
-        print()
+        console.print()
         console.print(table)
-        print()
+        console.print()
