@@ -10,4 +10,4 @@ Simply copy this database. It contains a sample workout.
 cp data/authenticity.db ~/.authenticity
 ```
 
-The hidden .authenticity directory is created when the program is run but can be created manually, if necessary.
+The *.authenticity* directory is automatically created within your user home directory when the program is initially run but it can be created manually.
