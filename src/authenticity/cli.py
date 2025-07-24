@@ -16,7 +16,7 @@ from rich.table import Table
 from authenticity.exercises import get_exercises_by_group, get_muscle_groups
 from authenticity.models import Exercises, Workouts, engine
 
-console = Console(tab_size=4, width=80)
+console = Console(soft_wrap=True, tab_size=4, width=80)
 
 
 def menu(choices: list[str] | int, offset: int = 1) -> str:
