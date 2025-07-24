@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   12.07.25
+Modified:   24.07.25
 """
 
 from datetime import datetime
@@ -19,11 +19,12 @@ from authenticity.models import Exercises, Workouts, engine
 console = Console(tab_size=4, width=80)
 
 
-def menu(choices: list[str] | int) -> str:
+def menu(choices: list[str] | int, offset: int = 1) -> str:
     """Captures user input from the console.
 
     Args:
         choices (list[str]|int): List of choices or max value in a range of numbers.
+        offset (int): If choices argument is an int, multiplies each choice by offset.
 
     Returns:
         str: Returns the user's response."""
@@ -40,7 +41,7 @@ def menu(choices: list[str] | int) -> str:
 
     # If using numbers as options, create a range, starting from 1.
     if isinstance(choices, int):
-        choices = list(str(n + 1) for n in range(choices))
+        choices = list(str((n + 1) * offset) for n in range(choices))
 
     indexed_choices = index_choices(choices)
     first_index, last_index = first_and_last(indexed_choices)
@@ -88,7 +89,8 @@ def add(ctx) -> None:
             )
             conn.commit()
 
-            num_of_exercises = int(Prompt.ask("How many exercises were performed?"))
+            console.print("How many exercises were performed?")
+            num_of_exercises = int(menu(8))
             # Ask for workout info for each exercise
             for _ in range(1, num_of_exercises + 1):
                 console.print("Enter the targeted body part.")
@@ -98,7 +100,8 @@ def add(ctx) -> None:
                 exercise = menu(get_exercises_by_group(muscle_group))
 
                 num_of_sets = int(Prompt.ask("How many sets were performed?"))
-                weight = int(Prompt.ask("How much weight was used?"))
+                console.print("How much weight was used?")
+                weight = int(menu(16, 5))
                 for set_number in range(1, num_of_sets + 1):
                     num_of_reps = int(
                         Prompt.ask(
@@ -124,7 +127,7 @@ def add(ctx) -> None:
         exit()
 
 
-@cli.command("delete", help="Delete a workout.")
+@cli.command("delete", help="Delete a workout by ID.")
 @click.option("--wid", required=True, help="Workout ID number to delete.")
 @click.pass_context
 def delete(ctx, wid):
@@ -138,7 +141,7 @@ def delete(ctx, wid):
             console.print(f"Deleted WID {wid}.")
 
 
-@cli.command("view", help="View a workout.")
+@cli.command("view", help="View a workout by ID.")
 @click.option("--wid", required=True, help="Workout ID number to view.")
 @click.pass_context
 def view(ctx, wid) -> None:
