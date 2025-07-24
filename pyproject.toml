@@ -1,6 +1,6 @@
 [project]
 name = "authenticity"
-version = "0.2.13"
+version = "0.2.14"
 description = "Workout tracking application."
 authors = [
     { name = "Marcus T Taylor", email = "mtaylor9754@hotmail.com" }
