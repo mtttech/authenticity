@@ -2,7 +2,7 @@
 exercises.py
 Author:     Marcus T Taylor
 Created:    11.10.24
-Modified:   23.07.25
+Modified:   30.07.25
 """
 
 # https://thefitnessphantom.com/list-of-dumbbell-exercises
