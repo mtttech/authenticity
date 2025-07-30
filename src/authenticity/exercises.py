@@ -14,7 +14,7 @@ exercise_list = {
         "Dumbbell Plank Rowing",
         "Hanging Knee Raises",
         "Leg Raises",
-        "Oblique crunches",
+        "Oblique Crunches",
         "Reverse Crunches",
         "Russian Twist",
         "Side Plank",
@@ -77,7 +77,8 @@ exercise_list = {
         "Underhand Grip Chest Press",
     ],
     "Forearm": [
-        "Dumbbell Farmers Walk" "Dumbbell Wrist Curl",
+        "Dumbbell Farmers Walk",
+        "Dumbbell Wrist Curl",
         "Dumbbell Wrist Extension",
         "Dumbbell Wrist Rotation",
         "Neutral Grip Wrist Curl",
