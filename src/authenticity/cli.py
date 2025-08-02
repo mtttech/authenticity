@@ -20,7 +20,7 @@ console = Console(soft_wrap=True, tab_size=4, width=80)
 
 
 def menu(choices: list[str] | int, offset: int = 1) -> str:
-    """Captures user input from the console.
+    """Captures user input from the prompt.
 
     Args:
         choices (list[str]|int): List of choices or max value in a range of numbers.
@@ -75,9 +75,7 @@ def add(ctx) -> None:
     def create_workout():
         from sqlalchemy import insert
 
-        workout_title = Prompt.ask(
-            "Name your workout session (i.e: My Meditation Session, etc)."
-        )
+        workout_title = Prompt.ask("Give your workout session a name.")
         # TODO: Add something to track the workout's duration, perhaps? >:(
         # TODO: Functional but lets clean this system up a lil bit.
         with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
