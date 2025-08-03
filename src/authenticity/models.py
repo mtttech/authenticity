@@ -3,6 +3,7 @@ models.py
 Author:     Marcus T Taylor
 Created:    26.11.23
 Modified:   03.07.25
+Purpose:    Handles database interactions.
 """
 
 import os

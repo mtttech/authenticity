@@ -3,6 +3,7 @@ exercises.py
 Author:     Marcus T Taylor
 Created:    11.10.24
 Modified:   30.07.25
+Purpose:    Stores a list of all exercises.
 """
 
 # https://thefitnessphantom.com/list-of-dumbbell-exercises

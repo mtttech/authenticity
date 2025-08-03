@@ -3,6 +3,7 @@ cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
 Modified:   24.07.25
+Purpose:    Main script.
 """
 
 from datetime import datetime
