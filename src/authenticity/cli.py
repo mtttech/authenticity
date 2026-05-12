@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   24.07.25
+Modified:   12.05.26
 Purpose:    Main script.
 """
 
@@ -76,14 +76,24 @@ def add(ctx) -> None:
     def create_workout():
         from sqlalchemy import insert
 
-        workout_title = Prompt.ask("Give your workout session a name.")
-        # TODO: Add something to track the workout's duration, perhaps? >:(
-        # TODO: Functional but lets clean this system up a lil bit.
+        # Title
+        workout_title = Prompt.ask("Workout title.")
+        # Category
+        console.print("Workout category.")
+        workout_category = menu(["Cardio", "Flexibility", "HIIT", "Other", "Sports", "Strength"])
+        # Duration
+        workout_duration = int(Prompt.ask("Workout duration."))
+        # Comments
+        workout_comments = Prompt.ask("Workout comments.")
+
         with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
             result = conn.execute(
                 insert(Workouts).values(
                     workout_title=workout_title,
                     workout_date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    workout_category=workout_category,
+                    workout_duration=workout_duration,
+                    workout_comments=workout_comments,
                 )
             )
             conn.commit()
