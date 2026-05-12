@@ -2,8 +2,8 @@
 models.py
 Author:     Marcus T Taylor
 Created:    26.11.23
-Modified:   03.07.25
-Purpose:    Handles database interactions.
+Modified:   12.0.265
+Purpose:    Handles database structure.
 """
 
 import os
@@ -35,6 +35,9 @@ class Workouts(Base):
     workout_id = Column(Integer, primary_key=True)
     workout_title = Column(String)
     workout_date = Column(String)
+    workout_category = Column(String)
+    workout_duration = Column(Integer)
+    workout_comments = Column(String)
 
 
 Base.metadata.create_all(engine)
