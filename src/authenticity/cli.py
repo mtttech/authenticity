@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   12.05.26
+Modified:   13.05.26
 Purpose:    Main script.
 """
 
@@ -14,7 +14,6 @@ from rich.console import Console
 from rich.prompt import Confirm, Prompt
 from rich.table import Table
 
-from authenticity.exercises import get_exercises_by_group, get_muscle_groups
 from authenticity.models import Exercises, Workouts, engine
 
 console = Console(soft_wrap=True, tab_size=4, width=80)
@@ -98,35 +97,33 @@ def add(ctx) -> None:
             )
             conn.commit()
 
-            console.print("How many exercises were performed?")
-            num_of_exercises = int(menu(8))
-            # Ask for workout info for each exercise
-            for _ in range(1, num_of_exercises + 1):
-                console.print("Enter the targeted body part.")
-                muscle_group = menu(get_muscle_groups())
-
-                console.print("Enter the exercise performed.")
-                exercise = menu(get_exercises_by_group(muscle_group))
-
-                num_of_sets = int(Prompt.ask("How many sets were performed?"))
-                console.print("How much weight was used?")
-                weight = int(menu(16, 5))
-                for set_number in range(1, num_of_sets + 1):
-                    num_of_reps = int(
+            while True:
+                # Exercise name
+                exercise_name = Prompt.ask("Exercise performed.")
+                # Exercise sets
+                exercise_sets = int(Prompt.ask("How many sets were performed?"))
+                # Exercise weight
+                exercise_weight = int(Prompt.ask("Exercise weight."))
+                for set_number in range(1, exercise_sets + 1):
+                    exercise_reps = int(
                         Prompt.ask(
                             f"How many reps were performed for set {set_number}?"
                         )
                     )
                     conn.execute(
                         insert(Exercises).values(
-                            exercise_name=exercise,
+                            exercise_name=exercise_name,
                             workout_id=result.lastrowid,
                             exercise_set=set_number,
-                            exercise_reps=num_of_reps,
-                            exercise_weight=weight,
+                            exercise_reps=exercise_reps,
+                            exercise_weight=exercise_weight,
                         )
                     )
                     conn.commit()
+
+                yes_no = menu(["Y", "N"])
+                if yes_no == "N":
+                    break
 
     try:
         create_workout()
