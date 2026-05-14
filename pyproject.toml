@@ -3,7 +3,7 @@ name = "authenticity"
 version = "0.2.14"
 description = "Workout tracking application."
 authors = [
-    { name = "Marcus T Taylor", email = "mtaylor9754@hotmail.com" }
+    { name = "Marcus T Taylor", email = "mtaylor3121@gmail.com" }
 ]
 license = {text="MIT"}
 readme = "docs/README.md"
@@ -23,7 +23,7 @@ Repository = "https://github.com/mtttech/authenticity"
 Issues = "https://github.com/mtttech/authenticity/issues"
 
 [project.scripts]
-authenticity='authenticity.cli:cli'
+authenticity='authenticity.cli:main_cli'
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
