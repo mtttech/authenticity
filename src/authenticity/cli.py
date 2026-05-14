@@ -2,20 +2,49 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   13.05.26
+Modified:   14.05.26
 Purpose:    Main script.
 """
 
 from datetime import datetime
-from typing import Any
+from typing import Any, Optional
 
 import rich_click as click
 from rich.console import Console
 from rich.prompt import Confirm, Prompt
 from rich.table import Table
+from sqlalchemy import Integer, String, create_engine
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from authenticity.models import Exercises, Workouts, engine
 
+DATABASE_URL = "sqlite:///authenticity.db"
+
+
+class Base(DeclarativeBase):
+    pass
+
+
+class Exercises(Base):
+    __tablename__ = "exercises"
+    exercise_id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    workout_id: Mapped[int] = mapped_column(Integer)
+    exercise_name: Mapped[str] = mapped_column(String(100))
+    exercise_set: Mapped[int] = mapped_column(Integer)
+    exercise_reps: Mapped[int] = mapped_column(Integer)
+    exercise_weight: Mapped[int] = mapped_column(Integer)
+
+
+class Workouts(Base):
+    __tablename__ = "workouts"
+    workout_id: Mapped[int] = mapped_column(primary_key=True)
+    workout_title: Mapped[str] = mapped_column(String(100), nullable=False)
+    workout_date: Mapped[str] = mapped_column(String(30))
+    workout_category: Mapped[str] = mapped_column(String(20))
+    workout_duration: Mapped[int] = mapped_column(Integer)
+    workout_comments: Mapped[Optional[str]]
+
+
+engine = create_engine(DATABASE_URL)
 console = Console(soft_wrap=True, tab_size=4, width=80)
 
 
@@ -65,11 +94,13 @@ def menu(choices: list[str] | int, offset: int = 1) -> str:
 @click.group()
 @click.version_option()
 @click.pass_context
-def cli(ctx):
+def main_cli(ctx):
+    Base.metadata.create_all(engine)
+
     ctx.ensure_object(dict)
 
 
-@cli.command("add", help="Add a workout.")
+@main_cli.command("add", help="Add a workout.")
 @click.pass_context
 def add(ctx) -> None:
     def create_workout():
@@ -133,7 +164,7 @@ def add(ctx) -> None:
         exit()
 
 
-@cli.command("delete", help="Delete a workout by ID.")
+@main_cli.command("delete", help="Delete a workout by ID.")
 @click.option("--wid", required=True, help="Workout ID number to delete.")
 @click.pass_context
 def delete(ctx, wid):
@@ -147,7 +178,7 @@ def delete(ctx, wid):
             console.print(f"Deleted WID {wid}.")
 
 
-@cli.command("view", help="View a workout by ID.")
+@main_cli.command("view", help="View a workout by ID.")
 @click.option("--wid", required=True, help="Workout ID number to view.")
 @click.pass_context
 def view(ctx, wid) -> None:
