@@ -158,7 +158,7 @@ def add(ctx) -> None:
 
     try:
         create_workout()
-    except click.exceptions.Abort:
+    except click.ClickException:
         console.print("\n")
         console.print("Exit")
         exit()
