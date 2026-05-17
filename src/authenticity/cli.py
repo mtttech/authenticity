@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
-Modified:   14.05.26
+Modified:   16.05.26
 Purpose:    Main script.
 """
 
@@ -48,12 +48,11 @@ engine = create_engine(DATABASE_URL)
 console = Console(soft_wrap=True, tab_size=4, width=80)
 
 
-def menu(choices: list[str] | int, offset: int = 1) -> str:
+def menu(choices: list[str]) -> str:
     """Captures user input from the prompt.
 
     Args:
-        choices (list[str]|int): List of choices or max value in a range of numbers.
-        offset (int): If choices argument is an int, multiplies each choice by offset.
+        choices (list[str]): List of choices.
 
     Returns:
         str: Returns the user's response."""
@@ -67,10 +66,6 @@ def menu(choices: list[str] | int, offset: int = 1) -> str:
         for index, option in enumerate(choices):  # pyright: ignore
             indexed_choices[index + 1] = option
         return indexed_choices
-
-    # If using numbers as options, create a range, starting from 1.
-    if isinstance(choices, int):
-        choices = list(str((n + 1) * offset) for n in range(choices))
 
     indexed_choices = index_choices(choices)
     first_index, last_index = first_and_last(indexed_choices)
