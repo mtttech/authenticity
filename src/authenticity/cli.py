@@ -218,3 +218,7 @@ def view(ctx, wid) -> None:
         console.print()
         console.print(table)
         console.print()
+
+
+if __name__ == "__main__":
+    main_cli()
