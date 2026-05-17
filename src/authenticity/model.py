@@ -3,7 +3,7 @@ cli.py
 Author:     Marcus T Taylor
 Created:    23.11.23
 Modified:   16.05.26
-Purpose:    Main script.
+Purpose:    Database model script.
 """
 
 from typing import Optional
