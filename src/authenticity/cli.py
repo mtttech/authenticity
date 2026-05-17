@@ -7,44 +7,16 @@ Purpose:    Main script.
 """
 
 from datetime import datetime
-from typing import Any, Optional
+from typing import Any
 
 import rich_click as click
 from rich.console import Console
 from rich.prompt import Confirm, Prompt
 from rich.table import Table
-from sqlalchemy import Integer, String, create_engine
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+from authenticity.model import Base, Exercises, Workouts, engine
 
 
-DATABASE_URL = "sqlite:///authenticity.db"
-
-
-class Base(DeclarativeBase):
-    pass
-
-
-class Exercises(Base):
-    __tablename__ = "exercises"
-    exercise_id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    workout_id: Mapped[int] = mapped_column(Integer)
-    exercise_name: Mapped[str] = mapped_column(String(100))
-    exercise_set: Mapped[int] = mapped_column(Integer)
-    exercise_reps: Mapped[int] = mapped_column(Integer)
-    exercise_weight: Mapped[int] = mapped_column(Integer)
-
-
-class Workouts(Base):
-    __tablename__ = "workouts"
-    workout_id: Mapped[int] = mapped_column(primary_key=True)
-    workout_title: Mapped[str] = mapped_column(String(100), nullable=False)
-    workout_date: Mapped[str] = mapped_column(String(30))
-    workout_category: Mapped[str] = mapped_column(String(20))
-    workout_duration: Mapped[int] = mapped_column(Integer)
-    workout_comments: Mapped[Optional[str]]
-
-
-engine = create_engine(DATABASE_URL)
 console = Console(soft_wrap=True, tab_size=4, width=80)
 
 
