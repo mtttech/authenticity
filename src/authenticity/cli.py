@@ -2,7 +2,7 @@
 cli.py
 Author:     Marcus T Taylor <mtaylor3121@gmail.com>
 Created:    23.11.23
-Modified:   16.05.26
+Modified:   25.05.26
 Purpose:    Main script.
 """
 
@@ -15,7 +15,6 @@ from rich.prompt import Confirm, Prompt
 from rich.table import Table
 
 from authenticity.model import Base, Exercises, Workouts, engine
-
 
 console = Console(soft_wrap=True, tab_size=4, width=80)
 
@@ -77,7 +76,9 @@ def add(ctx) -> None:
         workout_title = Prompt.ask("Workout title.")
         # Category
         console.print("Workout category.")
-        workout_category = menu(["Cardio", "Flexibility", "HIIT", "Other", "Sports", "Strength"])
+        workout_category = menu(
+            ["Cardio", "Flexibility", "HIIT", "Other", "Sports", "Strength"]
+        )
         # Duration
         workout_duration = int(Prompt.ask("Workout duration."))
         # Comments
@@ -95,33 +96,38 @@ def add(ctx) -> None:
             )
             conn.commit()
 
-            while True:
-                # Exercise name
-                exercise_name = Prompt.ask("Exercise performed.")
-                # Exercise sets
-                exercise_sets = int(Prompt.ask("How many sets were performed?"))
-                # Exercise weight
-                exercise_weight = int(Prompt.ask("Exercise weight."))
-                for set_number in range(1, exercise_sets + 1):
-                    exercise_reps = int(
-                        Prompt.ask(
-                            f"How many reps were performed for set {set_number}?"
+            console.print("Add exercises?")
+            yes_no = menu(["Y", "N"])
+            if yes_no == "Y":
+                while True:
+                    # Exercise name
+                    exercise_name = Prompt.ask("Exercise performed.")
+                    # Exercise sets
+                    exercise_sets = int(Prompt.ask("How many sets were performed?"))
+                    for set_number in range(1, exercise_sets + 1):
+                        # Exercise weight
+                        exercise_weight = int(Prompt.ask("Exercise weight."))
+                        # Exercise reps
+                        exercise_reps = int(
+                            Prompt.ask(
+                                f"How many reps were performed for set {set_number}?"
+                            )
                         )
-                    )
-                    conn.execute(
-                        insert(Exercises).values(
-                            exercise_name=exercise_name,
-                            workout_id=result.lastrowid,
-                            exercise_set=set_number,
-                            exercise_reps=exercise_reps,
-                            exercise_weight=exercise_weight,
+                        conn.execute(
+                            insert(Exercises).values(
+                                exercise_name=exercise_name,
+                                workout_id=result.lastrowid,
+                                exercise_set=set_number,
+                                exercise_reps=exercise_reps,
+                                exercise_weight=exercise_weight,
+                            )
                         )
-                    )
-                    conn.commit()
+                        conn.commit()
 
-                yes_no = menu(["Y", "N"])
-                if yes_no == "N":
-                    break
+                    console.print("Enter another exercise?")
+                    yes_no = menu(["Y", "N"])
+                    if yes_no == "N":
+                        break
 
     try:
         create_workout()
@@ -129,6 +135,52 @@ def add(ctx) -> None:
         console.print("\n")
         console.print("Exit")
         exit()
+
+
+@main_cli.command("dash", help="View most recent workouts.")
+@click.pass_context
+def dash(ctx) -> None:
+    from sqlalchemy import select, desc
+
+    with engine.connect() as conn:  # pyright: ignore[reportGeneralTypeIssues]
+        stmt = (
+            select(
+                Workouts.workout_id,
+                Workouts.workout_title,
+                Workouts.workout_duration,
+                Workouts.workout_category,
+                Workouts.workout_date,
+                Workouts.workout_comments,
+            )
+            .order_by(desc(Workouts.workout_id))
+            .limit(5)
+        )
+        results = conn.execute(stmt).fetchall()
+        
+        # No recent workouts found.
+        if results == None:
+            console.print(f"No recent workouts found.")
+            return
+
+        for data in results:
+            (
+                wid,
+                title,
+                duration,
+                category,
+                date,
+                comments,
+            ) = data
+            table = Table(title=f"{title} on {date}")
+            table.add_column()
+            table.add_column("Category")
+            table.add_column("Duration")
+            table.add_column("Comments")
+            table.add_row(str(wid), str(category), str(duration), str(comments))
+
+            console.print()
+            console.print(table)
+            console.print()
 
 
 @main_cli.command("delete", help="Delete a workout by ID.")
